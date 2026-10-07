@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>阿毛療癒站</title>
+<style>
+:root{--bg:#fff4e8;--card:#ffffff;--text:#5a3a22;--sub:#a58468;--accent:#ff8fab;--accent2:#ff6b8f;--track:#f3dfcc;--gold:#ffb800;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a1f18;--card:#3a2c22;--text:#ffe9d6;--sub:#c9a98c;--track:#54402f}}
+:root[data-theme="dark"]{--bg:#2a1f18;--card:#3a2c22;--text:#ffe9d6;--sub:#c9a98c;--track:#54402f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;min-height:100vh;display:flex;justify-content:center}
+main{width:100%;max-width:440px;padding:32px 20px;text-align:center}
+h1{font-size:1.4rem;margin:0 0 4px}
+.sub{color:var(--sub);font-size:.9rem;margin:0 0 24px}
+.count{font-size:3.2rem;font-weight:800;color:var(--accent2);line-height:1}
+.title{margin:8px 0 28px;font-weight:700;min-height:1.5em}
+.wrap{position:relative;display:inline-block}
+#btn{font:inherit;font-size:1.5rem;font-weight:800;color:#fff;border:0;cursor:pointer;padding:22px 40px;border-radius:999px;background:linear-gradient(180deg,var(--accent),var(--accent2));box-shadow:0 8px 0 #e04e75,0 14px 24px rgba(224,78,117,.35);transition:transform .08s,box-shadow .08s;-webkit-tap-highlight-color:transparent;user-select:none}
+#btn:active,#btn.press{transform:translateY(6px);box-shadow:0 2px 0 #e04e75,0 6px 12px rgba(224,78,117,.35)}
+.fl{position:absolute;left:50%;top:0;font-weight:800;color:var(--accent2);pointer-events:none;animation:up .8s ease-out forwards}
+@keyframes up{to{transform:translate(var(--dx),-80px);opacity:0}}
+.card{background:var(--card);border-radius:20px;padding:20px;margin-top:36px;box-shadow:0 4px 16px rgba(0,0,0,.08);text-align:left}
+.row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--sub);margin-bottom:8px}
+.track{height:18px;background:var(--track);border-radius:999px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:999px;transition:width .3s}
+ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px}
+li{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:12px;background:var(--track);opacity:.55;font-size:.95rem}
+li.on{opacity:1;background:linear-gradient(90deg,#ffe3ec,#fff0c2);color:#5a3a22;font-weight:700}
+.reset{margin-top:20px;background:none;border:0;color:var(--sub);font:inherit;font-size:.8rem;cursor:pointer;text-decoration:underline}
+#toast{position:fixed;left:50%;top:calc(20px + env(safe-area-inset-top,0px));transform:translate(-50%,-150%);background:var(--gold);color:#4a2f00;padding:12px 22px;border-radius:999px;font-weight:800;box-shadow:0 6px 18px rgba(0,0,0,.25);transition:transform .4s}
+#toast.show{transform:translate(-50%,0)}
+.cat{width:280px;max-width:85%;display:block;margin:0 auto}
+.cat.wig{animation:wig .35s}
+@keyframes wig{25%{transform:rotate(-4deg) scale(1.04)}75%{transform:rotate(4deg) scale(1.04)}}
+.say{display:inline-block;margin:6px 0 10px;padding:6px 14px;border-radius:999px;background:var(--card);color:var(--sub);font-size:.85rem;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.heart{opacity:0;transform-box:fill-box}
+.cat.wig .heart{animation:hp .7s ease-out}
+@keyframes hp{0%{opacity:0;transform:translateY(8px)}40%{opacity:1}100%{opacity:0;transform:translateY(-14px)}}
+.cat{filter:drop-shadow(0 6px 6px rgba(120,70,30,.25))}
+.eyes-angry,.frown,.vein{display:none}
+.cat.angry .eyes-happy,.cat.angry .smile,.cat.angry .heart{display:none}
+.cat.angry .eyes-angry,.cat.angry .frown,.cat.angry .vein{display:inline}
+.cat.angry .cheek{fill:#ff3b3b;opacity:.75}
+.cat.angry,.cat.angry.wig{animation:shk .12s infinite;filter:drop-shadow(0 6px 6px rgba(220,40,40,.45)) saturate(1.2)}
+@keyframes shk{0%{transform:translate(-3px,0) rotate(-1.5deg)}50%{transform:translate(3px,1px) rotate(1.5deg)}100%{transform:translate(-3px,0) rotate(-1.5deg)}}
+.say.mad{background:#ff5a5a;color:#fff;font-weight:700}
+#btn{touch-action:manipulation;-webkit-user-select:none;-webkit-touch-callout:none}
+body{-webkit-text-size-adjust:100%;-webkit-user-select:none;user-select:none}
+#btn{transition:transform .08s,box-shadow .08s,opacity .3s}
+#btn.gone{opacity:0;pointer-events:none;transform:scale(.6)}
+.cat.roll{animation:roll 1.5s ease-in-out}
+@keyframes roll{0%{transform:translateX(0) rotate(0)}60%{transform:translateX(22%) rotate(360deg)}78%{transform:translateX(22%) rotate(360deg)}100%{transform:translateX(0) rotate(360deg)}}
+body{overflow-x:hidden}
+.cat{transition:transform .4s}
+#fx{position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;overflow:hidden;z-index:50}
+.fxi{position:absolute;width:170px;animation:fxa 1s forwards}
+.fxi svg{width:100%;display:block;overflow:visible}
+.fxi b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:2.6rem;color:#e11d1d;-webkit-text-stroke:3px #fff;paint-order:stroke fill;text-shadow:0 3px 8px rgba(0,0,0,.4)}
+@keyframes fxa{0%{opacity:0;transform:scale(.4) rotate(var(--r))}12%{opacity:1;transform:scale(1.15) rotate(var(--r))}70%{opacity:1;transform:scale(1) rotate(var(--r))}100%{opacity:0;transform:scale(1) rotate(var(--r))}}
+.sl{stroke-dasharray:220;stroke-dashoffset:220;animation:dr .18s forwards}
+.sl:nth-of-type(2){animation-delay:.07s}.sl:nth-of-type(3){animation-delay:.14s}
+@keyframes dr{to{stroke-dashoffset:0}}
+.jaw{transform-box:fill-box;transform-origin:50% 50%;animation:ch .3s 3}
+@keyframes ch{0%{transform:scaleY(.2)}50%{transform:scaleY(1)}100%{transform:scaleY(.2)}}
+.mouth-o,.meowt{display:none}
+.cat.meowing .mouth-o{display:inline}
+.cat.meowing .smile{display:none}
+.cat.meowing .meowt{display:inline;opacity:0;transform-box:fill-box;animation:mt 1.2s forwards}
+@keyframes mt{0%{opacity:0;transform:translateY(8px)}20%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.stage{position:relative;width:280px;max-width:85%;margin:0 auto}
+.stage .cat{width:100%;max-width:none;margin:0}
+.boxs{position:absolute;left:19%;width:62%;bottom:-2%;z-index:6;opacity:0;pointer-events:none;transform:translateY(40%) scale(.8);transition:transform .5s cubic-bezier(.3,1.4,.5,1),opacity .3s}
+.stage.box .boxs{opacity:1;transform:none;pointer-events:auto;cursor:pointer}
+.pk{opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+.stage.peek .pk{opacity:1;animation:bk 3s infinite}
+@keyframes bk{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.1)}}
+.cat{transition:transform .4s,opacity .3s}
+.cat.hid{transform:scale(.3);opacity:0;transform-origin:50% 100%}
+.cat.hid,.cat.hid.wig,.cat.hid.roll{animation:none}
+.eyes-happy{display:none}
+.cat.happy .eyes-happy{display:inline}
+.cat.happy .eyes-open{display:none}
+.cat.angry .eyes-open,.cat.angry.happy .eyes-open,.cat.angry.happy .eyes-happy{display:none}
+.eo{transform-box:fill-box;transform-origin:50% 50%;animation:blink 4.5s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+</style>
+</head>
+<body>
+<main>
+  <div class="stage" id="stage"><svg class="cat" id="cat" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-label="阿毛">
+<g stroke-linejoin="round" stroke-linecap="round" fill="none">
+<path d="M76 262Q18 272 26 214Q32 188 56 194" stroke="#5a3a22" stroke-width="24"/>
+<path d="M76 262Q18 272 26 214Q32 188 56 194" stroke="#f3aa5a" stroke-width="18"/>
+<path d="M76 262Q18 272 26 214Q32 188 56 194" stroke="#cf7a2b" stroke-width="18" stroke-dasharray="6 14" stroke-linecap="butt"/>
+<path d="M98 176Q68 212 72 262Q74 290 108 292H192Q226 290 228 262Q232 212 202 176Z" fill="#f3aa5a" stroke="#5a3a22" stroke-width="3.5"/>
+<path d="M76 214q8 4 16 0M75 236q8 4 16 0M224 214q-8 4 -16 0M225 236q-8 4 -16 0" stroke="#cf7a2b" stroke-width="6"/>
+<path d="M120 174Q108 228 106 291H194Q192 228 180 174Z" fill="#fff" stroke="none"/>
+<path d="M106 292H194" stroke="#5a3a22" stroke-width="3.5"/>
+<g class="footL"><ellipse cx="82" cy="270" rx="31" ry="25" fill="#fff" stroke="#5a3a22" stroke-width="3.5" transform="rotate(-12 82 270)"/>
+<g fill="#ffb3c6" stroke="none"><ellipse cx="82" cy="276" rx="11" ry="8" transform="rotate(-12 82 276)"/><circle cx="65" cy="262" r="4.4"/><circle cx="80" cy="256" r="4.8"/><circle cx="96" cy="258" r="4.4"/></g></g>
+<g class="footR"><ellipse cx="218" cy="270" rx="31" ry="25" fill="#fff" stroke="#5a3a22" stroke-width="3.5" transform="rotate(12 218 270)"/>
+<g fill="#ffb3c6" stroke="none"><ellipse cx="218" cy="276" rx="11" ry="8" transform="rotate(12 218 276)"/><circle cx="235" cy="262" r="4.4"/><circle cx="220" cy="256" r="4.8"/><circle cx="204" cy="258" r="4.4"/></g></g>
+<g class="al"><g stroke-linecap="round"><path d="M113 184Q96 212 105 240" stroke="#5a3a22" stroke-width="36"/><path d="M113 184Q96 212 105 240" stroke="#f3aa5a" stroke-width="30"/><path d="M92 206l14 -3M93 221l14 -3" stroke="#cf7a2b" stroke-width="4.5"/></g>
+<ellipse cx="105" cy="247" rx="18" ry="15" fill="#fff" stroke="#5a3a22" stroke-width="3.2"/><path d="M98 248v7M105 249v7M112 248v7" stroke="#5a3a22" stroke-width="2" opacity=".6"/></g>
+<g class="ar"><g stroke-linecap="round"><path d="M187 184Q204 212 195 240" stroke="#5a3a22" stroke-width="36"/><path d="M187 184Q204 212 195 240" stroke="#f3aa5a" stroke-width="30"/><path d="M208 206l-14 -3M207 221l-14 -3" stroke="#cf7a2b" stroke-width="4.5"/></g>
+<ellipse cx="195" cy="247" rx="18" ry="15" fill="#fff" stroke="#5a3a22" stroke-width="3.2"/><path d="M188 248v7M195 249v7M202 248v7" stroke="#5a3a22" stroke-width="2" opacity=".6"/></g>
+<g stroke="#5a3a22" stroke-width="3">
+<path d="M66 84C54 60 52 36 58 18Q60 9 70 12C98 22 118 40 132 60Z" fill="#f3aa5a"/><path d="M234 84C246 60 248 36 242 18Q240 9 230 12C202 22 182 40 168 60Z" fill="#f3aa5a"/>
+</g>
+<path d="M76 70C66 52 66 38 71 30Q73 26 78 28C92 34 106 44 116 58Z" fill="#ffb3c6" stroke="none"/><path d="M224 70C234 52 234 38 229 30Q227 26 222 28C208 34 194 44 184 58Z" fill="#ffb3c6" stroke="none"/>
+<ellipse cx="150" cy="114" rx="94" ry="76" fill="#f3aa5a" stroke="#5a3a22" stroke-width="3"/>
+<path d="M134 44v14M150 40v18M166 44v14" stroke="#cf7a2b" stroke-width="6"/>
+<path d="M64 100l18 5M62 114l18 3M236 100l-18 5M238 114l-18 3" stroke="#cf7a2b" stroke-width="5"/>
+<ellipse cx="130" cy="152" rx="27" ry="20" fill="#fff" stroke="none"/><ellipse cx="170" cy="152" rx="27" ry="20" fill="#fff" stroke="none"/><ellipse cx="150" cy="168" rx="21" ry="11" fill="#fff" stroke="none"/>
+<ellipse class="cheek" cx="80" cy="142" rx="14" ry="9" fill="#ff8fab" opacity=".4" stroke="none"/>
+<ellipse class="cheek" cx="220" cy="142" rx="14" ry="9" fill="#ff8fab" opacity=".4" stroke="none"/>
+<g class="eyes-open"><g class="eo"><ellipse cx="112" cy="112" rx="17" ry="19" fill="#d8bb2e" stroke="#5a3a22" stroke-width="3"/><ellipse cx="112" cy="114" rx="6.5" ry="13" fill="#2a1a10" stroke="none"/><circle cx="106" cy="104" r="4.5" fill="#fff" stroke="none"/><circle cx="118" cy="122" r="2.2" fill="#fff" stroke="none"/></g><g class="eo"><ellipse cx="188" cy="112" rx="17" ry="19" fill="#d8bb2e" stroke="#5a3a22" stroke-width="3"/><ellipse cx="188" cy="114" rx="6.5" ry="13" fill="#2a1a10" stroke="none"/><circle cx="182" cy="104" r="4.5" fill="#fff" stroke="none"/><circle cx="194" cy="122" r="2.2" fill="#fff" stroke="none"/></g></g>
+<g stroke="#5a3a22" stroke-width="5" class="eyes-happy"><path d="M94 116q18 -22 36 0M170 116q18 -22 36 0"/></g>
+<g class="eyes-angry" stroke="#5a3a22" stroke-width="6"><path d="M88 90l44 14M212 90l-44 14"/><circle cx="112" cy="120" r="6" fill="#5a3a22"/><circle cx="188" cy="120" r="6" fill="#5a3a22"/></g>
+<path d="M141 136h18l-9 10z" fill="#ff6b8f" stroke="#5a3a22" stroke-width="2.5"/>
+<g class="mouth-o"><ellipse cx="150" cy="162" rx="12" ry="11" fill="#7a1022" stroke="#5a3a22" stroke-width="3"/><ellipse cx="150" cy="167" rx="7" ry="4" fill="#ff8fab" stroke="none"/></g>
+<path class="smile" d="M150 146v8M136 156q14 11 14 -2M164 156q-14 11 -14 -2" stroke="#5a3a22" stroke-width="3"/><path class="frown" d="M150 146v4M134 166q16 -12 32 0" stroke="#5a3a22" stroke-width="3"/>
+<path d="M104 150l-52 -8M104 158l-54 6M196 150l52 -8M196 158l54 6" stroke="#8a6a50" stroke-width="2.5"/>
+<path d="M98 184Q150 208 202 184" stroke="#5a3a22" stroke-width="11"/>
+<path d="M98 184Q150 208 202 184" stroke="#b5622a" stroke-width="6"/>
+<circle cx="150" cy="208" r="10" fill="#ffd23f" stroke="#5a3a22" stroke-width="2.8"/>
+<path d="M143 208h14" stroke="#5a3a22" stroke-width="2.2"/><circle cx="150" cy="213" r="2" fill="#5a3a22" stroke="none"/>
+</g>
+<text class="meowt" x="4" y="110" font-size="26" font-weight="800" fill="#ff8a3d">喵～</text>
+<text class="vein" x="205" y="52" font-size="36">💢</text>
+<text class="heart" x="22" y="64" font-size="26" fill="#ff6b8f">♥</text>
+<text class="heart" x="262" y="64" font-size="20" fill="#ff8fab">♥</text>
+</svg>
+<svg class="boxs" id="box" viewBox="0 0 200 140"><g stroke="#8a6a3a" stroke-width="3" stroke-linejoin="round"><path d="M20 44L4 18L66 24L76 44Z" fill="#e3b97a"/><path d="M180 44L196 18L134 24L124 44Z" fill="#e3b97a"/><rect x="20" y="40" width="160" height="96" rx="4" fill="#d9ac6e"/><rect x="84" y="40" width="32" height="96" fill="#c18f4f" stroke="none"/><rect x="32" y="50" width="136" height="16" rx="8" fill="#2e2013" stroke="none"/><circle class="pk" cx="78" cy="58" r="5" fill="#ffd23f" stroke="none"/><circle class="pk" cx="122" cy="58" r="5" fill="#ffd23f" stroke="none"/><text x="100" y="112" font-size="16" font-weight="800" text-anchor="middle" fill="#7a5a2e" stroke="none">阿毛的家</text></g></svg></div>
+<div class="say" id="say">（舒服到不想動）</div>
+<h1>阿毛療癒站</h1>
+  <p class="sub">今天也來摸摸阿毛吧</p>
+  <div class="count" id="count">0</div>
+  <div class="title" id="title">還沒摸過阿毛</div>
+  <div class="wrap" id="wrap"><button id="btn">摸阿毛 +1</button></div>
+
+  <section class="card">
+    <div class="row"><span id="next">下一個目標：阿毛新手</span><span id="pct">0 / 10</span></div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <ul id="list"></ul>
+  </section>
+  <button class="reset" id="mute">🔊 音效：開</button> <button class="reset" id="reset">重新開始</button>
+</main>
+<div id="fx"></div>
+<div id="toast"></div>
+<script>
+const LV=[{n:10,t:"阿毛新手",e:"🌱"},{n:100,t:"阿毛OSIM",e:"💆"},{n:500,t:"阿毛達人",e:"⭐"},{n:1000,t:"阿毛聖手",e:"👑"}];
+let c=0;
+try{c=parseInt(localStorage.getItem("amao"))||0}catch(e){}
+const $=id=>document.getElementById(id);
+function cur(){let r=null;for(const l of LV)if(c>=l.n)r=l;return r}
+
+let AC=null,muted=false;
+try{muted=localStorage.getItem("amao_mute")==="1"}catch(e){}
+function ctx(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(AC&&AC.state==="suspended")AC.resume();return AC}
+function tone(f1,f2,dur,type,vol,t0){
+  const a=ctx();if(!a||muted)return;const t=a.currentTime+(t0||0);
+  const o=a.createOscillator(),g=a.createGain();
+  o.type=type;o.frequency.setValueAtTime(f1,t);o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(g).connect(a.destination);o.start(t);o.stop(t+dur+0.05);
+}
+function meow(){const k=0.85+Math.random()*0.4;tone(500*k,900*k,0.12,"triangle",0.25);tone(900*k,420*k,0.3,"triangle",0.25,0.11);}
+function pop(){tone(700,1100,0.08,"sine",0.2)}
+function fanfare(){[523,659,784,1047].forEach((f,i)=>tone(f,f,0.25,"square",0.12,i*0.12));tone(1047,1047,0.6,"triangle",0.15,0.5)}
+function setMute(){$("mute").textContent=muted?"🔇 音效：關":"🔊 音效：開"}
+$("mute").addEventListener("click",()=>{muted=!muted;try{localStorage.setItem("amao_mute",muted?"1":"0")}catch(e){}setMute();if(!muted)pop()});
+setMute();
+$("cat").addEventListener("animationend",e=>{if(e.animationName==="roll")$("cat").classList.remove("roll")});
+let times=[],angry=false,calmT=null;
+const A=["不要一直摸啦！！","太用力了喔！","哈！！(炸毛)","夠了夠了夠了","我要生氣了喔！"];
+function growl(){tone(260,110,0.35,"sawtooth",0.18);tone(240,100,0.3,"square",0.08,0.05)}
+let tick=null,lastTap=0,beat=0,atkT=null,atkN=0;
+function noise(d,f,v){const a=ctx();if(!a||muted)return;const n=Math.floor(a.sampleRate*d),b=a.createBuffer(1,n,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<n;i++)x[i]=Math.random()*2-1;
+  const s=a.createBufferSource();s.buffer=b;const fl=a.createBiquadFilter();fl.type="bandpass";fl.frequency.setValueAtTime(f,a.currentTime);fl.frequency.exponentialRampToValueAtTime(f/3,a.currentTime+d);
+  const g=a.createGain();g.gain.setValueAtTime(v,a.currentTime);g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+d);s.connect(fl).connect(g).connect(a.destination);s.start()}
+const FX={scratch:`<svg viewBox="0 0 160 160"><g fill="none" stroke-linecap="round"><path class="sl" d="M30 10Q52 80 40 150" stroke="#e11d1d" stroke-width="11"/><path class="sl" d="M75 4Q97 80 85 156" stroke="#e11d1d" stroke-width="11"/><path class="sl" d="M120 10Q142 80 130 150" stroke="#e11d1d" stroke-width="11"/></g></svg><b>抓！</b>`,bite:`<svg viewBox="0 0 160 120"><g class="jaw"><ellipse cx="80" cy="60" rx="70" ry="42" fill="#7a1022" stroke="#3a0610" stroke-width="4"/><g fill="#fff" stroke="#3a0610" stroke-width="2"><path d="M18 28l12 24l12-24z"/><path d="M42 28l12 24l12-24z"/><path d="M66 28l12 24l12-24z"/><path d="M90 28l12 24l12-24z"/><path d="M114 28l12 24l12-24z"/><path d="M18 92l12-24l12 24z"/><path d="M42 92l12-24l12 24z"/><path d="M66 92l12-24l12 24z"/><path d="M90 92l12-24l12 24z"/><path d="M114 92l12-24l12 24z"/></g></g></svg><b>咬！</b>`};
+function attack(k){
+  const d=document.createElement("div");d.className="fxi";d.innerHTML=FX[k];
+  d.style.left=(12+Math.random()*50)+"%";d.style.top=(20+Math.random()*30)+"%";d.style.setProperty("--r",(Math.random()*50-25)+"deg");
+  $("fx").appendChild(d);setTimeout(()=>d.remove(),1050);
+  if(k==="scratch"){noise(0.25,6000,0.35);noise(0.25,4500,0.25)}else{tone(180,60,0.12,"square",0.25);tone(180,60,0.12,"square",0.25,0.2);tone(180,60,0.12,"square",0.25,0.4)}
+  try{navigator.vibrate&&navigator.vibrate(k==="bite"?[80,60,80]:120)}catch(e){}}
+function purr(){for(let i=0;i<6;i++)tone(95,80,0.1,"sawtooth",0.06,i*0.12)}
+const R=["好舒服～向後滾～","咕嚕咕嚕～","這個節奏剛剛好！","滾滾滾～"];
+function roll(){const c=$("cat");
+  requestAnimationFrame(()=>{if(angry||greeting||hiding)return;c.classList.remove("wig","roll");void c.getBoundingClientRect();c.classList.add("roll");
+    $("say").textContent=R[Math.floor(Math.random()*R.length)];
+    tone(400,1300,0.45,"sine",0.2);tone(1300,700,0.25,"triangle",0.12,0.4)});}
+function mad(){$("cat").classList.remove("happy");endGreet();angry=true;$("cat").classList.add("angry");$("say").classList.add("mad");
+  const b=$("btn");b.disabled=true;b.classList.add("gone");
+  let n=5;$("say").textContent="阿毛氣到把按鈕藏起來了… "+n;
+  clearInterval(tick);tick=setInterval(()=>{n--;if(n>0)$("say").textContent="阿毛氣到把按鈕藏起來了… "+n},1000);
+  clearTimeout(calmT);calmT=setTimeout(calm,5000);
+  atkN=0;attack("scratch");clearInterval(atkT);atkT=setInterval(()=>attack(++atkN%2?"bite":"scratch"),1200)}
+function calm(){angry=false;times=[];clearInterval(tick);clearInterval(atkT);const b=$("btn");b.disabled=false;b.classList.remove("gone");$("cat").classList.remove("angry");$("say").classList.remove("mad");$("say").textContent="哼……這次原諒你，按鈕還你"}
+let greeting=false,hiddenAt=0,hiding=false,sessStart=0,lastTouch=0;
+function hideAway(){
+  hiding=true;endHungry();clearTimeout(idleT);
+  const c=$("cat"),st=$("stage"),b=$("btn");
+  b.disabled=true;b.classList.add("gone");
+  $("say").textContent="摸太久了啦…阿毛要躲起來！";tone(500,150,0.4,"triangle",0.2);
+  setTimeout(()=>{st.classList.add("box");tone(140,60,0.2,"sine",0.3)},600);
+  setTimeout(()=>{c.classList.add("hid");st.classList.add("peek");$("say").textContent="阿毛躲進箱子裡了…（讓牠休息一下）"},1300);
+  setTimeout(()=>{c.classList.remove("hid");st.classList.remove("peek");$("say").textContent="休息夠了～出來囉！";pop()},9000);
+  setTimeout(()=>{st.classList.remove("box");b.disabled=false;b.classList.remove("gone");hiding=false;times=[];sessStart=lastTouch=0;resetIdle()},9700)}
+$("box").addEventListener("click",()=>{if(hiding){$("say").textContent="（箱子裡傳來呼嚕呼嚕聲…）";purr()}});
+function endGreet(){greeting=false}
+function greet(){
+  if(angry||greeting||hiding)return;greeting=true;endHungry();resetIdle();
+  const c=$("cat");
+  c.classList.remove("wig","roll");void c.getBoundingClientRect();c.classList.add("wig");meow();
+  $("say").textContent="嗨～你來啦！阿毛來打招呼～";
+  setTimeout(()=>{if(!greeting)return;greeting=false;$("say").textContent="來摸摸我吧！"},2500)}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)hiddenAt=Date.now();else if(hiddenAt&&Date.now()-hiddenAt>20000)greet()});
+let hungry=false,idleT=null,hungryI=null;
+const H=["肚子餓餓～喵～","喵～罐罐呢？","喵嗚～我餓了","好餓喔…喵～"];
+function hungryMeow(){
+  if(angry||hiding||document.hidden)return;
+  const c=$("cat");c.classList.add("meowing");
+  tone(110,60,0.5,"sawtooth",0.07);meow();setTimeout(meow,500);
+  $("say").textContent=H[Math.floor(Math.random()*H.length)];
+  setTimeout(()=>c.classList.remove("meowing"),1300)}
+function becomeHungry(){
+  if(angry||hiding){idleT=setTimeout(becomeHungry,5000);return}
+  hungry=true;hungryMeow();clearInterval(hungryI);hungryI=setInterval(hungryMeow,6000)}
+function endHungry(){hungry=false;clearInterval(hungryI)}
+function resetIdle(){clearTimeout(idleT);idleT=setTimeout(becomeHungry,15000)}
+function render(){
+  $("count").textContent=c;
+  const k=cur();$("title").textContent=k?k.e+" "+k.t:"還沒摸過阿毛";
+  const nx=LV.find(l=>c<l.n);
+  if(nx){const prev=LV[LV.indexOf(nx)-1];const s=prev?prev.n:0;
+    $("fill").style.width=((c-s)/(nx.n-s)*100)+"%";
+    $("next").textContent="下一個目標："+nx.t;$("pct").textContent=c+" / "+nx.n;}
+  else{$("fill").style.width="100%";$("next").textContent="已達成全部成就 🎉";$("pct").textContent=c;}
+  $("list").innerHTML=LV.map(l=>`<li class="${c>=l.n?"on":""}"><span>${l.e} ${l.t}</span><span>${c>=l.n?"✔ 達成":l.n+" 次"}</span></li>`).join("");
+}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+$("btn").addEventListener("click",()=>{
+  c++;try{localStorage.setItem("amao",c)}catch(e){}
+  const wasHungry=hungry;endHungry();resetIdle();
+  const now=Date.now();
+  if(now-lastTouch>5000)sessStart=now;lastTouch=now;
+  if(!hiding&&!angry&&now-sessStart>=30000)hideAway();
+  times.push(now);times=times.filter(t=>now-t<2000);
+  if(times.length>=8&&!angry)mad();
+  const gap=now-lastTap;lastTap=now;
+  if(gap>=700&&gap<=1400)beat++;else beat=0;
+  if(beat>=4&&!angry){beat=0;roll()}
+  const f=document.createElement("span");f.className="fl";f.textContent="+1";
+  f.style.setProperty("--dx",(Math.random()*80-40)+"px");f.style.marginLeft="-10px";
+  $("wrap").appendChild(f);setTimeout(()=>f.remove(),800);
+  const hit=LV.find(l=>l.n===c);if(hit)fanfare();else if(angry)growl();else if(c%5===0)pop();else meow();if(hit)toast(hit.e+" 恭喜達成「"+hit.t+"」！");
+  if(!angry){const hc=$("cat");hc.classList.add("happy");clearTimeout(window.hT);window.hT=setTimeout(()=>hc.classList.remove("happy"),1200)}
+  const cat=$("cat");cat.classList.remove("wig");void cat.getBoundingClientRect();cat.classList.add("wig");
+  const L=["……嗯。","再摸一下也不是不行","躺平中，請勿打擾","好啦好啦，隨便你","摸完記得給罐罐","我沒有睡著，我在思考"];
+  if(hiding){}else if(angry){if(Math.random()<.4)$("say").textContent=A[Math.floor(Math.random()*A.length)]}else $("say").textContent=wasHungry?"摸摸就不餓了～":L[Math.floor(Math.random()*L.length)];
+  render();
+});
+$("reset").addEventListener("click",()=>{if(confirm("確定要清除紀錄重新開始嗎？")){c=0;try{localStorage.removeItem("amao")}catch(e){}render()}});
+render();resetIdle();setTimeout(greet,800);
+</script>
+</body>
+</html>
